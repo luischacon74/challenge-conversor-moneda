@@ -27,21 +27,4 @@ public class ConsumirTasDeCambio {
             throw new RuntimeException("No se encontró el valor adecuado.", e);
         }
     }
-
-    public Set<String> obtenerCodigosMoneda() {
-        URI direccion = URI.create(API_URL);
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(direccion)
-                .build();
-        try {
-            HttpResponse<String> response = client
-                    .send(request, HttpResponse.BodyHandlers.ofString());
-            JsonObject jsonResponse = JsonParser.parseString(response.body()).getAsJsonObject();
-            JsonObject conversionRates = jsonResponse.getAsJsonObject("conversion_rates");
-            return conversionRates.keySet();
-        } catch (Exception e) {
-            throw new RuntimeException("No se pudieron obtener los códigos de moneda.", e);
-        }
-    }
 }
